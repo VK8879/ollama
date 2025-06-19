@@ -1,1 +1,21 @@
+# vk_custom_dockerfile
+FROM golang:1.22 as build
+
+WORKDIR /app
+
+COPY . .
+
+RUN make build
+
+FROM debian:bookworm-slim
+
+RUN apt-get update && \
+    apt-get install -y ca-certificates && \
+    rm -rf /var/lib/apt/lists/*
+
+COPY --from=build /app/ollama /usr/bin/ollama
+
+EXPOSE 11434
+
+ENTRYPOINT ["/usr/bin/ollama"]
 
