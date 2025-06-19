@@ -1,9 +1,9 @@
 #!/bin/bash
 
-# Start Ollama in the background
+# Start Ollama server in the background
 ollama serve &
 
-# Wait for the Ollama server to start
+# Wait until the Ollama server is up
 echo "Waiting for Ollama to start..."
 until curl -s http://localhost:11434 > /dev/null; do
   sleep 1
@@ -24,5 +24,5 @@ ollama pull falcon
 ollama pull phi3
 ollama pull orca-mini
 
-# Keep Ollama running in the foreground
+# Keep process alive
 wait -n
