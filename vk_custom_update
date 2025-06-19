@@ -1,1 +1,11 @@
+#!/bin/bash
 
+echo "🔁 Restoring custom Dockerfile and Dockerignore..."
+
+# Restore your custom Dockerfile
+cp vk_custom_dockerfile Dockerfile
+
+# Restore your custom Dockerignore
+cp vk_custom_dockerignore .dockerignore
+
+echo "✅ Custom files restored successfully. Safe to proceed with build."
