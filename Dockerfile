@@ -1,13 +1,14 @@
+# Use official Ollama base image
 FROM ollama/ollama:latest
 
 # Set working directory
 WORKDIR /app
 
-# Copy the startup script
+# Copy renamed entrypoint script into container
 COPY vk_entrypoint.sh /app/vk_entrypoint.sh
 
-# Make it executable
+# Make the script executable
 RUN chmod +x /app/vk_entrypoint.sh
 
-# Start Ollama using the custom entrypoint
+# Set custom entrypoint to start Ollama and pull models
 CMD ["/app/vk_entrypoint.sh"]
