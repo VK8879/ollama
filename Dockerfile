@@ -1,9 +1,13 @@
-# Use official Ollama base image
+# Use official Ollama image
 FROM ollama/ollama:latest
 
-# Copy entrypoint script into image
-COPY vk_entrypoint.sh /app/vk_entrypoint.sh
+WORKDIR /app
+
+# Copy your entrypoint script
+COPY vk_entrypoint.sh .
+
+# Make it executable
 RUN chmod +x /app/vk_entrypoint.sh
 
-# Set the script as the default command
-CMD ["/app/vk_entrypoint.sh"]
+# Use the script itself as the entrypoint
+ENTRYPOINT ["/app/vk_entrypoint.sh"]
