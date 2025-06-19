@@ -1,4 +1,3 @@
-# ----------- STAGE 1: Build ollama binary (skip this if using prebuilt binary) ----------
 FROM debian:bookworm-slim as runtime
 
 # Install required tools
@@ -6,9 +5,8 @@ RUN apt-get update && \
     apt-get install -y ca-certificates curl gnupg && \
     rm -rf /var/lib/apt/lists/*
 
-# Download prebuilt Ollama binary
-RUN curl -fsSL https://ollama.com/download/Ollama-linux -o /usr/bin/ollama && \
-    chmod +x /usr/bin/ollama
+# Install Ollama using the official install script
+RUN curl -fsSL https://ollama.com/install.sh | bash
 
 # Create model directory
 RUN mkdir -p /root/.ollama
@@ -26,5 +24,5 @@ RUN ollama serve & \
 # Expose port
 EXPOSE 11434
 
-# Default command
+# Start server
 CMD ["ollama", "serve"]
