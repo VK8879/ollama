@@ -1,14 +1,17 @@
 #!/bin/bash
-ollama serve &
 
-# Wait for Ollama API to come up
-until curl -s http://localhost:11434 > /dev/null; do sleep 1; done
+echo "[ollama] 🧠 Booting with Preload Script..."
 
-# Pull your models
-for model in llama3 mixtral dbrx codellama openchat phoenix; do
-  echo "Pulling $model..."
-  ollama pull "$model"
+# List of models to preload
+models=("llama3" "mistral" "gemma" "phi")
+
+# Preload each model
+for model in "${models[@]}"
+do
+  echo "[ollama] 📦 Preloading model: $model"
+  curl -s -X POST http://localhost:11434/api/pull -d "{\"name\": \"$model\"}" || echo "[ollama] ⚠️ Failed to preload $model"
 done
 
-# Keep the server running
-wait -n
+# Start Ollama server
+echo "[ollama] ✅ Starting Ollama server..."
+exec ollama serve
