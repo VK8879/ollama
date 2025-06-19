@@ -4,10 +4,10 @@ FROM ollama/ollama:latest
 WORKDIR /app
 
 # Copy the startup script
-COPY entrypoint.sh /app/entrypoint.sh
+COPY vk_entrypoint.sh /app/vk_entrypoint.sh
 
 # Make it executable
-RUN chmod +x /app/entrypoint.sh
+RUN chmod +x /app/vk_entrypoint.sh
 
-# Run Ollama serve, then pull models
-CMD ["/app/entrypoint.sh"]
+# Start Ollama using the custom entrypoint
+CMD ["/app/vk_entrypoint.sh"]
