@@ -1,13 +1,12 @@
-# Use official Ollama image
-FROM ollama/ollama:latest
+FROM ollama/ollama
 
+# Install curl (required for model preload)
+RUN apt-get update && apt-get install -y curl
+
+# Set working directory and copy entrypoint script
 WORKDIR /app
-
-# Copy your entrypoint script
-COPY vk_entrypoint.sh .
-
-# Make it executable
+COPY vk_entrypoint.sh /app/vk_entrypoint.sh
 RUN chmod +x /app/vk_entrypoint.sh
 
-# Use the script itself as the entrypoint
-ENTRYPOINT ["/app/vk_entrypoint.sh"]
+# Set custom start command
+CMD ["/app/vk_entrypoint.sh"]
