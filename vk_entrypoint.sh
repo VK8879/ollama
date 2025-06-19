@@ -1,17 +1,17 @@
 #!/bin/bash
 
-echo "[ollama] 🧠 Booting with Preload Script..."
-
-# List of models to preload
-models=("llama3" "mistral" "gemma" "phi")
-
-# Preload each model
-for model in "${models[@]}"
-do
-  echo "[ollama] 📦 Preloading model: $model"
-  curl -s -X POST http://localhost:11434/api/pull -d "{\"name\": \"$model\"}" || echo "[ollama] ⚠️ Failed to preload $model"
-done
+# Pull all models you want preinstalled
+ollama pull llama3
+ollama pull phi3
+ollama pull codellama
+ollama pull dolphin-mixtral
+ollama pull gemma
+ollama pull orca-mini
+ollama pull qwen
+ollama pull mistral
+ollama pull openhermes
+ollama pull stablelm-zephyr
+ollama pull tinyllama
 
 # Start Ollama server
-echo "[ollama] ✅ Starting Ollama server..."
 exec ollama serve
