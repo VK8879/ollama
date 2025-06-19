@@ -1,29 +1,14 @@
 #!/bin/bash
+ollama serve &
 
-echo "🚀 Starting model download sequence..."
+# Wait for Ollama API to come up
+until curl -s http://localhost:11434 > /dev/null; do sleep 1; done
 
-# Define your models
-models=(
-  "llama3"
-  "llava:latest"
-  "llama3:instruct"
-  "gemma"
-  "mistral"
-  "mistral:instruct"
-  "codellama"
-  "codellama:instruct"
-  "phi"
-  "phi:instruct"
-  "tinyllama"
-)
-
-# Pull each model using Ollama
-for model in "${models[@]}"; do
-  echo "⬇️ Pulling model: $model"
+# Pull your models
+for model in llama3 mixtral dbrx codellama openchat phoenix; do
+  echo "Pulling $model..."
   ollama pull "$model"
 done
 
-echo "✅ All models pulled successfully. Launching Ollama..."
-
-# Start the Ollama server
-exec ollama serve
+# Keep the server running
+wait -n
