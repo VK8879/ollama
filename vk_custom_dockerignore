@@ -1,1 +1,17 @@
+# vk_custom_dockerignore
+
+.vscode
+ollama
+app
+macapp
+dist
+build
+.env
+.cache
+test_data
+.git
+README.md
+Dockerfile
+Dockerfile_original
+.dockerignore
 
