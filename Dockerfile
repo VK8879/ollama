@@ -1,10 +1,17 @@
-FROM ollama/ollama
+# Base image from Ollama
+FROM ollama/ollama:latest
 
-# Copy the entrypoint script from the repo root to the container's /app folder
-COPY vk_entrypoint.sh /app/vk_entrypoint.sh
+# Create working directory
+WORKDIR /app
 
-# Make the script executable
-RUN chmod +x /app/vk_entrypoint.sh
+# Copy custom entrypoint
+COPY vk_entrypoint.sh /app/entrypoint.sh
 
-# Use the script as the container's entrypoint
-ENTRYPOINT ["/app/vk_entrypoint.sh"]
+# Make sure it's executable
+RUN chmod +x /app/entrypoint.sh
+
+# Optional: expose port (Ollama defaults to 11434)
+EXPOSE 11434
+
+# Start the server using the custom entrypoint
+CMD ["/app/entrypoint.sh"]
