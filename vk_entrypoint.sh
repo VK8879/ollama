@@ -2,35 +2,29 @@
 
 echo "🧠 vk_entrypoint.sh started..."
 
+# Clean up any previously half-downloaded models to avoid volume bloat
+echo "🧹 Cleaning up old models (if any)..."
+rm -rf /root/.ollama/models/*
+
 # Start the Ollama server in the background
 ollama serve &
-sleep 5  # Give the server time to fully boot
+sleep 5  # wait briefly for server to initialize
 
-# Full model list (14 total)
-models=(
-  llama3
-  phi3
-  codellama
-  dolphin-mixtral
-  gemma
-  orca-mini
-  qwen
-  mistral
-  openhermes
-  stablelm-zephyr
-  tinyllama
-  llama2
-  neural-chat
-  openchat
-)
+# Pull all required models
+echo "⬇️ Pulling models..."
+ollama pull llama3
+ollama pull phi3
+ollama pull codellama
+ollama pull dolphin-mixtral
+ollama pull gemma
+ollama pull orca-mini
+ollama pull qwen
+ollama pull mistral
+ollama pull openhermes
+ollama pull stablelm-zephyr
+ollama pull tinyllama
 
-echo "📦 Pulling Ollama models..."
-for model in "${models[@]}"; do
-  echo "→ Pulling $model"
-  ollama pull "$model"
-done
+echo "✅ Model pulling complete. Ollama will now stay active."
 
-echo "✅ All models pulled successfully. Ollama will now stay active."
-
-# Keep container alive
+# Bring Ollama server to foreground to keep container alive
 fg
