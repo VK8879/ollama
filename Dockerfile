@@ -1,9 +1,14 @@
-# Use Ollama base image
-FROM ollama/ollama:latest
+# Use official Ollama base image
+FROM ollama/ollama
 
-# Copy your custom entrypoint
-COPY vk_entrypoint.sh /usr/bin/vk_entrypoint.sh
-RUN chmod +x /usr/bin/vk_entrypoint.sh
+# Set working directory
+WORKDIR /app
 
-# Run your script as the container start command
-ENTRYPOINT ["/usr/bin/vk_entrypoint.sh"]
+# Copy the entrypoint script into the container
+COPY vk_entrypoint.sh /app/vk_entrypoint.sh
+
+# Make the script executable
+RUN chmod +x /app/vk_entrypoint.sh
+
+# Run the entrypoint script
+ENTRYPOINT ["/app/vk_entrypoint.sh"]
