@@ -3,7 +3,7 @@
 echo "🚀 Starting Ollama server in background..."
 ollama serve &
 
-# Wait until Ollama is ready by checking if list command works
+# Wait until Ollama is ready by checking if the list command works
 echo "⏳ Waiting for Ollama to become ready..."
 until ollama list > /dev/null 2>&1; do
   sleep 1
@@ -19,5 +19,5 @@ else
   echo "✅ 'mistral' model already exists."
 fi
 
-# Keep Ollama server in foreground
-fg %1
+# ✅ Wait for ollama serve to stay alive (Railway safe)
+wait
