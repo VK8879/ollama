@@ -1,14 +1,13 @@
-# Use official Ollama base image
-FROM ollama/ollama
+FROM ollama/ollama:latest
 
-# Set working directory
 WORKDIR /app
 
-# Copy the entrypoint script into the container
 COPY vk_entrypoint.sh /app/vk_entrypoint.sh
-
-# Make the script executable
 RUN chmod +x /app/vk_entrypoint.sh
 
-# Run the entrypoint script
+# Security & telemetry disabled via shared vars (SEC_*)
+ENV OLLAMA_HOST=0.0.0.0 \
+    SEC_OLLAMA_ENABLE_TELEMETRY=false \
+    SEC_LANGFLOW_ENABLE_TELEMETRY=false
+
 ENTRYPOINT ["/app/vk_entrypoint.sh"]
