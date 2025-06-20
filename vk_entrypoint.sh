@@ -1,6 +1,6 @@
 #!/bin/bash
 
-echo "🧠 Pulling models into Ollama..."
+echo "🧠 vk_entrypoint.sh started..."
 
 # Pull all models you want preinstalled
 ollama pull llama3
