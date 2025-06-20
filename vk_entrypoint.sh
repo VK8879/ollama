@@ -1,19 +1,14 @@
 #!/bin/bash
 
-echo "🧠 vk_entrypoint.sh started..."
+echo "🔄 Checking for mistral model..."
 
-# Start Ollama server in background
-ollama serve &
-sleep 5
+# Pull mistral only if not already installed
+if ! ollama list | grep -q mistral; then
+  echo "⬇️  Pulling 'mistral' model..."
+  ollama pull mistral
+else
+  echo "✅ 'mistral' already available."
+fi
 
-# Pull only core MVP models for SWARM
-ollama pull llama3
-ollama pull phi3
-ollama pull mistral
-ollama pull gemma
-ollama pull codellama
-
-echo "✅ Model pulling complete. Ollama will now stay active."
-
-# Keep container alive
-fg
+echo "🚀 Starting Ollama..."
+exec ollama serve
