@@ -3,9 +3,9 @@
 echo "🚀 Starting Ollama server in background..."
 ollama serve &
 
-# Wait until Ollama API is responsive
+# Wait until Ollama is ready by checking if list command works
 echo "⏳ Waiting for Ollama to become ready..."
-until curl -s http://localhost:11434/api/tags > /dev/null; do
+until ollama list > /dev/null 2>&1; do
   sleep 1
 done
 
@@ -19,5 +19,5 @@ else
   echo "✅ 'mistral' model already exists."
 fi
 
-# Keep Ollama running in foreground
+# Keep Ollama server in foreground
 fg %1
